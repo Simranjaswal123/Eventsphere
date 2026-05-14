@@ -1,4 +1,5 @@
 {
+  "$schema": "https://schema.railpack.com",
   "steps": {
     "extensions": {
       "command": "install-php-extensions mongodb"
