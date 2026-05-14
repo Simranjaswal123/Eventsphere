@@ -1,3 +1,14 @@
+FROM node:22 AS frontend
+
+WORKDIR /app
+COPY package.json package-lock.json* ./
+RUN npm install
+
+COPY resources/ resources/
+COPY vite.config.js ./
+COPY public/ public/
+RUN npm run build
+
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
@@ -13,13 +24,8 @@ WORKDIR /app
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-scripts --no-interaction
 
-COPY --from=node:22 /usr/local/bin/node /usr/local/bin/node
-COPY --from=node:22 /usr/local/lib/node_modules /usr/local/lib/node_modules
-RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm
-
 COPY . .
-
-RUN npm install && npm run build
+COPY --from=frontend /app/public/build public/build
 
 RUN mkdir -p storage/framework/{sessions,views,cache,testing} storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
