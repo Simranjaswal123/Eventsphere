@@ -9,7 +9,7 @@ COPY vite.config.js ./
 COPY public/ public/
 RUN npm run build
 
-FROM php:8.2-cli
+FROM php:8.2-cli-bullseye
 
 RUN apt-get update && apt-get install -y \
     git curl zip unzip libssl-dev pkg-config ca-certificates \
