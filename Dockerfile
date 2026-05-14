@@ -12,7 +12,8 @@ RUN npm run build
 FROM php:8.2-cli
 
 RUN apt-get update && apt-get install -y \
-    git curl zip unzip libssl-dev pkg-config \
+    git curl zip unzip libssl-dev pkg-config ca-certificates \
+    && update-ca-certificates \
     && pecl install mongodb \
     && docker-php-ext-enable mongodb \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
