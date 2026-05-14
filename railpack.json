@@ -1,7 +1,10 @@
 {
   "steps": {
     "extensions": {
-      "command": "install-php-extensions ctype curl dom fileinfo filter hash mbstring openssl pcre pdo session tokenizer xml mongodb"
+      "command": "install-php-extensions mongodb"
+    },
+    "install:composer": {
+      "command": "composer install --optimize-autoloader --no-scripts --no-interaction --ignore-platform-req=ext-mongodb"
     }
   }
 }
